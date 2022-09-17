@@ -2,15 +2,16 @@ const express=require('express');
 const router=express.Router();
 const {getTransactions, deleteTransactions}=require('../controllers/transactions');
 const {addTransactions}=require('../controllers/transactions');
+const fetchuser=require('../middleware/fetchuser');
 
 router
 .route('/')
-.get(getTransactions)
-.post(addTransactions);
+.get(fetchuser,getTransactions)
+.post(fetchuser,addTransactions);
 
 router
 .route('/:id')
-.delete(deleteTransactions);
+.delete(fetchuser,deleteTransactions);
 
 
 module.exports=router;
