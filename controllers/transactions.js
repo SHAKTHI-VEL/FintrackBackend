@@ -5,8 +5,10 @@ const Transaction =require('../models/Transaction')
 // @access PUBLIC
 exports.getTransactions=async (req,res,next)=>{
     try {
-        const transactions=await Transaction.find();
+        const transactions=await Transaction.find({user:req.user.id});
         
+
+
         return res.status(200).json({
           sucess:true,
           count:transactions.length,
@@ -25,13 +27,19 @@ exports.getTransactions=async (req,res,next)=>{
 // @access PUBLIC
 exports.addTransactions=async (req,res,next)=>{
    try {
-    const {detail,amount}=req.body;    //If adding of another field is reequired then first add it to schema
-    const transaction=await Transaction.create(req.body);
+    const {category,amount}=req.body;    //If adding of another field is reequired then first add it to schema
+    // const transaction=await Transaction.create(req.body);
 
-    return res.status(201).json({
-      sucess:true,
-      data:transaction 
-    });
+    // return res.status(201).json({
+    //   sucess:true,
+    //   data:transaction 
+    // });
+    const transaction=new Transaction({
+        category,amount,user:req.user.id
+        })
+        const savedTransaction=await transaction.save()
+        res.json(savedTransaction); 
+
    } catch (err) {
 if(err.name==='ValidationError'){
 const messages=Object.values(err.errors).map(val=>val.message);
