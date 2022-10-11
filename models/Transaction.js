@@ -5,6 +5,10 @@ const TransactionSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'user'
     },
+    type:{
+        type:String,
+        required:[true,'Please add Expense or Income']
+    },
     category:{
      type:String,
      trim:true,
@@ -14,14 +18,10 @@ const TransactionSchema=new mongoose.Schema({
         type:Number,
         required:[true,'Please add amount']
     },
-    note:{
-        type:String,
-        trim:true,
-       
-       },
-    createdAt:{
+    
+    date:{
         type:Date,
-        default:Date.now
+        
     }
 });
 
