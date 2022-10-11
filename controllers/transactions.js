@@ -5,13 +5,9 @@ const Transaction =require('../models/Transaction')
 // @access PUBLIC
 exports.getTransactions = async (req, res, next) => {
     try {
-      const transactions = await Transaction.find();
+      const transactions = await Transaction.find({user:req.user.id});
   
-      return res.status(200).json({
-        success: true,
-        count: transactions.length,
-        data: transactions
-      });
+      return res.status(200).json(transactions)
     } catch (err) {
       return res.status(500).json({
         success: false,
