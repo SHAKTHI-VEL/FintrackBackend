@@ -7,7 +7,9 @@ exports.getTransactions = async (req, res, next) => {
     try {
       const transactions = await Transaction.find({user:req.user.id});
   
-      return res.status(200).json(transactions)
+      return res.status(200).json({
+data:{transactions}
+      })
     } catch (err) {
       return res.status(500).json({
         success: false,
