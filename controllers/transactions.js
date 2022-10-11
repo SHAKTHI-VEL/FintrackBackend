@@ -6,10 +6,11 @@ const Transaction =require('../models/Transaction')
 exports.getTransactions = async (req, res, next) => {
     try {
       const transactions = await Transaction.find({user:req.user.id});
-  
       return res.status(200).json({
-data:{transactions}
-      })
+        success: true,
+        count: transactions.length,
+        data: transactions
+      });
     } catch (err) {
       return res.status(500).json({
         success: false,
