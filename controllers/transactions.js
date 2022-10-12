@@ -6,7 +6,7 @@ const Transaction =require('../models/Transaction')
 // @access PUBLIC
 exports.getTransactions = async (req, res) => {
     try {
-      const transactions = await Transaction.find({user:req.user.id});
+      const transactions = await Transaction.find();
      res.send(transactions)
     } catch (err) {
       return res.status(500).json({
