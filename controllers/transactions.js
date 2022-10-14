@@ -1,19 +1,16 @@
-const { response } = require('express');
 const Transaction =require('../models/Transaction')
-
+const { body, validationResult } = require('express-validator');
 // @desc Get all transaction
 // @route GET /api/v1/transactions
 // @access PUBLIC
 exports.getTransactions = async (req, res) => {
     try {
-      const transactions = await Transaction.find();
-     res.send(transactions)
-    } catch (err) {
-      return res.status(500).json({
-        success: false,
-        error: 'Server Error'
-      });
-    }
+      const transactions = await Transaction.find({user:req.user.id});
+      res.json(transactions);
+    }  catch (error) {
+      console.error(error.message);
+      res.status(500).send("Some error occured"); 
+  }
   }
 
 // @desc Add transaction
